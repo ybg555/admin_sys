@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var fs = require('fs');
 var moment = require('moment');
-var favicon = require('express-favicon');
+// var favicon = require('express-favicon');
 // var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -26,10 +26,10 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(useragent.express());//User Agent解析,判断是否是手机,爬虫等
 
-/*Access restrict*/
-app.use(function(req, res, next) {
-	login.restrict(req, res, next);
-});
+/*登录*/
+// app.use(function(req, res, next) {
+// 	login.restrict(req, res, next);
+// });
 
 /*Router*/
 app.use('/', router_api);
