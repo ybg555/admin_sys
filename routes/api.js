@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var fs = require('fs');
-var filePath = __dirname.replace('routes', 'templates');
+var filePath = __dirname.replace('routes', 'templates/');
 // var options = {
 // 	root: filePath + 'templates/1/',
 // 	dotfiles: 'deny',
@@ -17,10 +17,11 @@ var filePath = __dirname.replace('routes', 'templates');
 // 	next();
 // });
 
-router.use('/:module/:action?', function(req, res, next) {
+router.use('/:area/:module/:action?', function(req, res, next) {
+	var area = req.params.area;
 	var module = req.params.module;
 	var action = req.params.action ? req.params.action : 'index';
-	console.log(module, action, 1);
+	console.log(req.query);
 	// var data = {
 	// 	title: "恒大互联网社区中心"，
 	// 	autho: "Blade",
@@ -29,7 +30,7 @@ router.use('/:module/:action?', function(req, res, next) {
 	// var data = fs.readFileSync(filePath + 'data/index.js', 'utf-8');
 	// console.log(typeof JSON.parse(str)); //字符串解析成json有问题
 	// console.log(typeof JSON.stringify(str)); //json解析成字符串正常
-	res.render(filePath + '/head/' + module + '.' + action + '.hbs', {
+	res.render(filePath + area + '/' + module + '.' + action + '.hbs', {
 		haveIf: true,
 		arr: [{
 			a: "a",
@@ -53,11 +54,11 @@ router.use('/:module/:action?', function(req, res, next) {
 });
 
 router.use('/', function(req, res, next) {
-	console.log(filePath);
+	var area = req.params.area ? req.params.area : 'head';
 	var module = req.params.module ? req.params.module : 'login';
 	var action = req.params.action ? req.params.action : 'index';
 	console.log(module, action, 2);
-	res.render(filePath + '/head/' + module + '.' + action + '.hbs');
+	res.render(filePath + area + '/' + module + '.' + action + '.hbs');
 });
 
 module.exports = router;
